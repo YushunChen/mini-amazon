@@ -109,7 +109,7 @@ def children(request):
 def thankyou(request):
     if not request.user.is_authenticated:
         return redirect('/accounts/login')
-    global back
+    global backend
     data = request.POST.copy()
     pkgid = Order.objects.count()
     data['pkgid'] = str(pkgid)
@@ -131,7 +131,7 @@ def thankyou(request):
             # not enough
             print('not enough stock')
             t1 = threading.Thread(
-                target=back.buy, args=(pid, whid, storage+count))
+                target=backend.buy, args=(pid, whid, storage+count))
             t1.start()
             return redirect('/invalid')
         else:
@@ -141,7 +141,7 @@ def thankyou(request):
             entry = Stock.objects.get(pid=pid)
             entry.count -= count
             entry.save()
-            t2 = threading.Thread(target=back.pack, args=(pkgid,))
+            t2 = threading.Thread(target=backend.pack, args=(pkgid,))
             t2.start()
             send_mail('Your order is confirmed!', 'Thank you for using Mini Amazon!', 'pcphd97@163.com',
                       [Order.objects.get(pkgid=pkgid).email], fail_silently=False)
@@ -162,8 +162,8 @@ def invalid(request):
 def orders(request):
     if not request.user.is_authenticated:
         return redirect('/accounts/login')
-    global back
-    back.refresh()
+    global backend
+    backend.refresh()
     orders = Order.objects.filter(user=request.user)
     context = {
         'orders': orders
