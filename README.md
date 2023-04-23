@@ -20,3 +20,9 @@ To stop postgres,
 ```bash
 sudo service postgresql stop
 ```
+
+## Notes related to Docker
+To create a superuser in Django within Docker
+```bash
+sudo docker exec -it <container_id> python3 manage.py createsuperuser
+```
