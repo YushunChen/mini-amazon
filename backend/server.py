@@ -5,7 +5,7 @@ import amazon_ups_pb2 as ups
 import world_amazon_pb2 as world
 
 from pb_utils import recv_response_on_socket as recv_response
-from pb_utils import send_request_on_socket as send_request
+from pb_utils import send_request_on_socket as send_command
 from pb_utils import get_open_socket
 from db_utils import connect_db
 
@@ -27,7 +27,7 @@ def connect_webapp(address):
     return webapp_socket
 
 
-def build_connect_world_request():
+def build_connect_world_command():
     _, cursor = connect_db()
 
     query = f"""
@@ -46,13 +46,13 @@ def build_connect_world_request():
         initWarehouse.y = row[2]
         initWarehouses.append(initWarehouse)
 
-    request = world.AConnect()
-    # request.worldid = world_id
-    request.isAmazon = True
+    command = world.AConnect()
+    # command.worldid = world_id
+    command.isAmazon = True
     for initWarehouse in initWarehouses:
-        request.initwh.add().CopyFrom(initWarehouse)
+        command.initwh.add().CopyFrom(initWarehouse)
 
-    return request
+    return command
 
 
 # Start server
@@ -63,7 +63,8 @@ world_socket = get_open_socket(WORLD_ADDRESS)
 webapp_socket = connect_webapp(WEBAPP_ADDRESS)
 
 # Connect to world
-request = build_connect_world_request()
-send_request(request, world_socket)
+command = build_connect_world_command()
+print("Connect world command: ", command)
+send_command(command, world_socket)
 response = recv_response(world.AConnected, world_socket)
 print(response.result)
