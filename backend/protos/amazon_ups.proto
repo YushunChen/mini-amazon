@@ -5,6 +5,8 @@ syntax = "proto2";
 message AUCommand{
  repeated AUPickupRequest pickupRequests = 1;
  repeated AUDeliverRequest deliverRequests = 2;
+ repeated int64 acks = 3;
+ repeated Err error = 4;
 }
 
 
@@ -12,15 +14,17 @@ message AUCommand{
 message UACommand{
  repeated UALoadRequest loadRequests = 1;
  repeated UADelivered delivered = 2;
-}
-
-
-// ack response
-message Response {
  repeated int64 acks = 3;
  repeated Err error = 4;
 }
 
+
+
+// UPS to Amazon: UPS creates a world for Amazon to connect to
+message UAstart {
+ required int32 worldid = 1;
+ required int64 seqnum = 2;
+}
 
 // Amazon to UPS: when Amazon received a Buy command, it send APickupRequest to UPS to prepare a truck sent to target warehouse
 message AUPickupRequest{

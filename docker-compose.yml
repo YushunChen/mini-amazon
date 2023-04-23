@@ -9,9 +9,21 @@ services:
         - POSTGRES_PASSWORD=Oliver666
       volumes:
             - data-volume:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    volumes:
+        - "./backend:/backend"
+    ports:
+        - "45678:45678"
+    tty: true
+    depends_on:
+        - db
+    command: bash -c "python3 server.py"
+    
   web-init:
       build: ./web_app
-      command: /code/initserver.sh
+      command: bash -c "/code/initserver.sh && python3 mini_amazon/db_setup.py"
       volumes:
         - ./web_app:/code
       depends_on:
