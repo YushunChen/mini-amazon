@@ -11,7 +11,7 @@ services:
             - data-volume:/var/lib/postgresql/data
   web-init:
       build: ./web_app
-      command: bash -c "/code/initserver.sh"
+      command: bash -c "/code/initserver.sh && python3 mini_amazon/db_setup.py"
       volumes:
         - ./web_app:/code
       depends_on:
