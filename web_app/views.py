@@ -76,7 +76,7 @@ def shop(request):
     return render(request, 'shop.html', context)
 
 
-def men(request):
+def knives(request):
     if not request.user.is_authenticated:
         return redirect('/accounts/login')
     products = Product.objects.filter(catalog=1)
@@ -86,7 +86,7 @@ def men(request):
     return render(request, 'shop.html', context)
 
 
-def women(request):
+def gloves(request):
     if not request.user.is_authenticated:
         return redirect('/accounts/login')
     products = Product.objects.filter(catalog=2)
@@ -96,7 +96,7 @@ def women(request):
     return render(request, 'shop.html', context)
 
 
-def children(request):
+def guns(request):
     if not request.user.is_authenticated:
         return redirect('/accounts/login')
     products = Product.objects.filter(catalog=3)
@@ -173,12 +173,12 @@ def orders(request):
 
 def search(request):
     text = request.GET['s']
-    if text <= 'children':
-        return redirect('/shop/children')
-    elif text <= 'men':
-        return redirect('/shop/men')
+    if text <= 'guns':
+        return redirect('/shop/guns')
+    elif text <= 'knives':
+        return redirect('/shop/knives')
     else:
-        return redirect('/shop/women')
+        return redirect('/shop/gloves')
 
 
 def touch(request):

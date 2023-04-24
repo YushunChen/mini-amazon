@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from views import home, cart, about, checkout, contact, shop, thankyou, register, signup, orders, men, women, children, invalid, search, touch
+from views import home, cart, about, checkout, contact, shop, thankyou, register, signup, orders, knives, gloves, guns, invalid, search, touch
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,15 +26,14 @@ urlpatterns = [
     path("accounts/submit/", signup, name="signup"),
     path('', home, name='home'),
     path('index/', home, name='home'),
-    path('about/', about, name='about'),
     path('cart/', cart, name='cart'),
     path('checkout/', checkout, name='checkout'),
     path('cart/', cart, name='cart'),
     path('contact/', contact, name='contact'),
     path('shop/', shop, name='shop'),
-    path('shop/men', men, name='men'),
-    path('shop/women', women, name='women'),
-    path('shop/children', children, name='children'),
+    path('shop/knives', knives, name='knives'),
+    path('shop/gloves', gloves, name='gloves'),
+    path('shop/guns', guns, name='guns'),
     path('shop-single/', checkout, name='shop-single'),
     path('thankyou/', thankyou, name='thankyou'),
     path('orders/', orders, name='orders'),
