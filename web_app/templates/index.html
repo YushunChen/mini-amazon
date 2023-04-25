@@ -111,10 +111,10 @@
                 <img src="{% static image_static %}" alt="Image placeholder" class="img-fluid">
                 {% endwith %}
               </figure>
-              <div class="block-4-text p-4">
-                <h3><a href="/shop-single">Product {{product.pid}}</a></h3>
+              <div class="block-4-text p-4 text-success">
+                <h3><a href="/shop-single"><span class="text-success">Product {{product.pid}}</span></a></h3>
                 <p class="mb-0">{{product.description}}</p>
-                <p class="text-primary font-weight-bold">${{product.price}}</p>
+                <p class="font-weight-bold">${{product.price}}</p>
               </div>
             </div>
           </div>
