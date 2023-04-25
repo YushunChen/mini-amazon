@@ -25,7 +25,7 @@ class World(Utils):
             optional int64 worldid = 1;
             repeated AInitWarehouse initwh = 2;
             required bool isAmazon = 3;
-            }
+        }
         """
         msg_init = world_amazon_pb2.AConnect()
         msg_init.worldid = world_id
@@ -45,7 +45,7 @@ class World(Utils):
         message AConnected{
             required int64 worldid= 1;
             required string result = 2;
-            }
+        }
         """
         raw_byte = self.recv()
         res = world_amazon_pb2.AConnected()
@@ -76,14 +76,14 @@ class World(Utils):
         repeated AErr error = 5;
         repeated int64 acks = 6;
         repeated APackage packagestatus = 7;
-        }
+    }
     """
 
     def response(self, raw_byte):
 
         msg = world_amazon_pb2.AResponses()
         msg.ParseFromString(raw_byte)
-        print("receive: ", msg)
+        print("Receive message: ", msg)
 
         # parse info in msg
         self.res_arr(msg)
@@ -125,8 +125,8 @@ class World(Utils):
         for r in msg.ready:
             """
             message APacked {
-            required int64 shipid = 1;
-            required int64 seqnum = 2;
+                required int64 shipid = 1;
+                required int64 seqnum = 2;
             }
             """
             if r.seqnum not in self.recv_msg:
@@ -147,8 +147,8 @@ class World(Utils):
         for l in msg.loaded:
             """
             message ALoaded{
-            required int64 shipid = 1;
-            required int64 seqnum = 2;
+                required int64 shipid = 1;
+                required int64 seqnum = 2;
             }
             """
             if l.seqnum not in self.recv_msg:
@@ -173,7 +173,7 @@ class World(Utils):
         required string err = 1;
         required int64 originseqnum = 2;
         required int64 seqnum = 3;
-        }
+    }
     """
 
     def res_err(self, msg):
@@ -192,9 +192,9 @@ class World(Utils):
         for pkg in msg.packagestatus:
             """
             message APackage{
-            required int64 packageid =1;
-            required string status = 2;
-            required int64 seqnum = 3;
+                required int64 packageid =1;
+                required string status = 2;
+                required int64 seqnum = 3;
             }
             """
             if pkg.seqnum not in self.recv_msg:
@@ -221,7 +221,7 @@ class World(Utils):
         required int32 truckid = 2;
         required int64 shipid = 3;
         required int64 seqnum = 4;
-        }
+    }
     """
 
     def put_on_truck(self, curr_order):
@@ -243,7 +243,7 @@ class World(Utils):
     message AQuery{
         required int64 packageid = 1;
         required int64 seqnum = 2;
-        }
+    }
     """
 
     def query(self):
@@ -268,7 +268,7 @@ class World(Utils):
         repeated AProduct things = 2;
         required int64 shipid = 3;
         required int64 seqnum = 4;
-        }
+    }
     """
 
     def pack(self, pkg_id):
@@ -301,7 +301,7 @@ class World(Utils):
         required int32 whnum = 1;
         repeated AProduct things = 2;
         required int64 seqnum = 3;
-        }
+    }
     """
 
     def purchase_more(self, product_id, wh_num, count):
