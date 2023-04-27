@@ -78,6 +78,8 @@ class UPS(Utils):
         required int32 y = 5; // location of the warehouse
         required int32 destinationX = 6;
         required int32 destinationY = 7;
+        optional string upsName = 8;
+        repeated string items = 9;
     }
     """
 
@@ -94,7 +96,9 @@ class UPS(Utils):
         truck.destinationX = worldOrder.x  # NOTE: check
         truck.destinationY = worldOrder.y
         truck.shipId = worldOrder.pkgid
-        # TODO: any product info?
+        # add item info
+        product = Product.objects.get(pid=worldOrder.pid)
+        truck.items.append(product.description)
         # update sequence number
         self.seq_num += 1
         temp = self.seq_num

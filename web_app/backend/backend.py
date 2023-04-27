@@ -17,7 +17,7 @@ class Backend():
         # print('ups initialized')
         self.world = World(HOST_WORLD, PORT_WORLD, SIMSPEED)
         print('Initialized world.')
-        # self.world.init()
+        self.world.init()
         # self.ups.setWorld(self.world)
         # self.world.setUPS(self.ups)
         # print('set completed')
