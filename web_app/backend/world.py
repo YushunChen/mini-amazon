@@ -11,7 +11,8 @@ class World(Utils):
     def setUPS(self, ups):
         self.ups = ups
 
-    def init(self, world_id):
+    # TODO: add world_id in parameters
+    def init(self):
         # clear order
         Order.objects.all().delete()
 
@@ -19,7 +20,6 @@ class World(Utils):
         for s in stocks:
             s.count = 0
             s.save()
-
         """
         message AConnect{
             optional int64 worldid = 1;
@@ -28,7 +28,7 @@ class World(Utils):
         }
         """
         msg_init = world_amazon_pb2.AConnect()
-        msg_init.worldid = world_id
+        # msg_init.worldid = world_id
 
         info_wh = Warehouse.objects.all()
 
@@ -51,7 +51,7 @@ class World(Utils):
         res = world_amazon_pb2.AConnected()
         res.ParseFromString(raw_byte)
         print(res.result)
-        assert world_id == res.worldid
+        # assert world_id == res.worldid
 
         th_handler = threading.Thread(target=self.handler, args=())
         th_handler.setDaemon(True)
@@ -134,7 +134,7 @@ class World(Utils):
                 # ship id
                 ship_id = r.shipid
                 shipment = Order.objects.get(pkgid=ship_id)
-                self.ups.sendTruck(shipment)
+                self.ups.pickup_request(shipment)
 
                 # ack
                 info_world.acks.append(r.seqnum)
@@ -157,7 +157,7 @@ class World(Utils):
                 seq = l.seqnum
 
                 shipment = Order.objects.get(pkgid=sid)
-                self.ups.loaded(shipment)
+                self.ups.deliver_request(shipment)
 
                 info_world.acks.append(seq)
 

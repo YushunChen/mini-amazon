@@ -29,7 +29,7 @@ class Utils():
         self.socket.close()
 
     def send(self, msg):
-        print("Sending message: " + str(msg))
+        print("Sending message: \n" + str(msg))
         if str(msg) != "":
             data_string = msg.SerializeToString()
             _EncodeVarint(self.socket.send, len(data_string), None)

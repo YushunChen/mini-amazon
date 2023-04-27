@@ -8,7 +8,7 @@ import threading
 
 class UPS(Utils):
 
-    def start(self):
+    def init(self):
         msg = self.receive_world()
         # send back
         msg_init = amazon_ups_pb2.AUCommand()
@@ -38,7 +38,7 @@ class UPS(Utils):
     }
     """
 
-    def receive_world(self):
+    def set_world(self):
         msg = world_amazon_pb2.UAstart()
         raw_byte = self.recv()
         msg.parseFromString(raw_byte)
@@ -126,7 +126,80 @@ class UPS(Utils):
         # update sequence number
         self.seq_num += 1
         temp = self.seq_num
-        truck.seqNum = temp
+        loaded.seqNum = temp
         self.seq_dict[temp] = msg
         # send message
         self.send(msg)
+
+    """
+    // response
+    message UACommand{
+        repeated UALoadRequest loadRequests = 1;
+        repeated UADelivered delivered = 2;
+        repeated int64 acks = 3;
+        repeated Err error = 4;
+    }
+    // U -> A Arrived, ready to load
+    message UALoadRequest{
+        required int64 seqNum = 1;
+        required int32 truckId = 2;
+        required int64 shipId = 3;
+    }
+    """
+
+    def load_request(self, arrived):
+        print("Processing load request")
+        UPSOrder = Order.objects.get(pkgid=arrived.shipId)
+        UPSOrder.save()
+        UPSOrder = Order.objects.get(truckid=arrived.truckId)
+        self.world.put_on_truck(UPSOrder)
+        return arrived.seqNum
+
+    """
+    // response
+    message UACommand{
+        repeated UALoadRequest loadRequests = 1;
+        repeated UADelivered delivered = 2;
+        repeated int64 acks = 3;
+        repeated Err error = 4;
+    }
+    // U -> A: delivered
+    message UADelivered{
+        required int64 seqNum = 1;
+        required int64 shipId = 2;
+    }
+    """
+
+    def package_delivered(self, delivered):
+        print("Processing delivered")
+        return delivered.seqNum
+
+    """
+    // response
+    message UACommand{
+        repeated UALoadRequest loadRequests = 1;
+        repeated UADelivered delivered = 2;
+        repeated int64 acks = 3;
+        repeated Err error = 4;
+    }
+    """
+
+    def process_response(self):
+        print("Processing response")
+        while True:
+            msg = self.receive()
+            back = amazon_ups_pb2.AUCommand()
+            # truck has arrived, ready to load
+            for lr in msg.loadRequests:
+                if lr.seqNum not in self.recv_msg:
+                    self.recv_msg.add(lr.seqNum)
+                    back.acks.append(self.load_request(lr))
+            # package delivered
+            for d in msg.delivered:
+                if d.seqNum not in self.recv_msg:
+                    self.recv_msg.add(d.seqNum)
+                    back.acks.append(self.package_delivered(d))
+            for ack in msg.acks:
+                self.seq_dict.pop(ack, None)
+            # send back
+            self.send(back)
