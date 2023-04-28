@@ -7,7 +7,6 @@ from mini_amazon.models import Order, Stock, Product
 from mini_amazon.forms import OrderForm
 from backend.backend import Backend
 
-
 global backend
 backend = Backend()
 
@@ -117,33 +116,33 @@ def thankyou(request):
     form = OrderForm(data or None)
     print(form)
     if not form.is_valid():
-        print('invalid input')
+        print('Invalid form input')
         return redirect('/invalid')
     else:
         pid = int(form.data['pid'])
         whid = int(form.data['whid'])
         count = int(form.data['count'])
-        if (count <= 0 or pid < 1 or pid > 4):
-            print('invalid input')
+        if (count <= 0 or pid < 1 or pid > 8):
+            print('Invalid content input')
             return redirect('/invalid')
         storage = Stock.objects.get(pid=pid).count
         if (count > storage):
             # not enough
-            print('not enough stock')
+            print('Invalid: insufficient stock')
             t1 = threading.Thread(
                 target=backend.buy, args=(pid, whid, storage+count))
             t1.start()
             return redirect('/invalid')
         else:
             # enough stock
-            print('start buying')
+            print('Start buying')
             form.save()
             entry = Stock.objects.get(pid=pid)
             entry.count -= count
             entry.save()
             t2 = threading.Thread(target=backend.pack, args=(pkgid,))
             t2.start()
-            send_mail('Your order is confirmed!', 'Thank you for using Mini Amazon!', 'pcphd97@163.com',
+            send_mail('Your order is confirmed!', 'Thank you for using Mini Amazon!', 'yc557@duke.com',
                       [Order.objects.get(pkgid=pkgid).email], fail_silently=False)
             return render(request, 'thankyou.html', {})
 
@@ -183,6 +182,6 @@ def search(request):
 
 def touch(request):
     email = request.GET['c_email']
-    send_mail('Hello from Mini Amazon!', 'Thank you for contacting us, be in touch!', 'pcphd97@163.com',
+    send_mail('Hello from Mini Amazon!', 'Thank you for contacting us, be in touch!', 'yc557@duke.edu',
               [email], fail_silently=False)
     return redirect('/index')

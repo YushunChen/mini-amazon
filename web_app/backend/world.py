@@ -12,7 +12,7 @@ class World(Utils):
         self.ups = ups
 
     # TODO: add world_id in parameters
-    def init(self):
+    def init(self, world_id):
         # clear order
         Order.objects.all().delete()
 
@@ -28,7 +28,7 @@ class World(Utils):
         }
         """
         msg_init = world_amazon_pb2.AConnect()
-        # msg_init.worldid = world_id
+        msg_init.worldid = world_id
 
         info_wh = Warehouse.objects.all()
 

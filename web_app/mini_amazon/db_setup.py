@@ -43,20 +43,41 @@ query = f"""
 """
 db_utils.execute_and_commit(query, conn, cursor)
 
+# create some stock
 # query = f"""
-#     SELECT 
-#         mini_amazon_warehouse.whid AS warehouse_id, 
-#         mini_amazon_product.pid AS product_id
-#     FROM mini_amazon_warehouse, mini_amazon_product
+#     SELECT mini_amazon_warehouse.whid AS warehouse_id
+#     FROM mini_amazon_warehouse
 # """
 # cursor.execute(query)
 # rows = cursor.fetchall()
-# for warehouse_id, product_id in rows:
+# for warehouse_id in rows:
 #     query = f"""
-#         INSERT INTO mini_amazon_stock(pid, count, worldid, whid) 
-#         VALUES({warehouse_id}, {product_id}, 0);
+#         INSERT INTO mini_amazon_stock(pid, count, worldid, whid)
+#         VALUES
+#         (1, 1, 1, {warehouse_id[0]}),
+#         (2, 1, 1, {warehouse_id[0]}),
+#         (3, 1, 1, {warehouse_id[0]}),
+#         (4, 1, 1, {warehouse_id[0]}),
+#         (5, 1, 1, {warehouse_id[0]}),
+#         (6, 1, 1, {warehouse_id[0]}),
+#         (7, 1, 1, {warehouse_id[0]}),
+#         (8, 1, 1, {warehouse_id[0]});
 #     """
 #     db_utils.execute_and_commit(query, conn, cursor)
+
+query = f"""
+        INSERT INTO mini_amazon_stock(pid, count, worldid, whid)
+        VALUES
+        (1, 1, 1, 1),
+        (2, 1, 1, 1),
+        (3, 1, 1, 1),
+        (4, 1, 1, 1),
+        (5, 1, 1, 1),
+        (6, 1, 1, 1),
+        (7, 1, 1, 1),
+        (8, 1, 1, 1);
+    """
+db_utils.execute_and_commit(query, conn, cursor)
 
 
 cursor.close()

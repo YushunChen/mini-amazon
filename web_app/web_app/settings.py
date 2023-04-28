@@ -89,8 +89,8 @@ DATABASES = {
         'NAME': 'projectDB',
         'USER': 'yc557',
         'PASSWORD': 'Oliver666',
-        # 'HOST': '127.0.0.1',  # for internal testing w/o Docker
-        'HOST': 'db',  # for Docker
+        'HOST': '127.0.0.1',  # for internal testing w/o Docker
+        # 'HOST': 'db',  # for Docker
         'PORT': '5432',
     }
 }

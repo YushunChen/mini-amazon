@@ -24,6 +24,9 @@ services:
         - ./web_app:/code
       expose:
         - "8000"
+        - "33333"
+      ports:
+        - "33333:33333"
       depends_on:
         - web-init
   nginx:

@@ -1,20 +1,27 @@
 from .utils import Utils
+from .ups_utils import UPSUtils
 from . import world_amazon_pb2
 from . import amazon_ups_pb2
 from mini_amazon.models import Order, Stock, Product, Warehouse
+from google.protobuf.internal.decoder import _DecodeVarint32
+from google.protobuf.internal.encoder import _VarintBytes
+from google.protobuf.internal.encoder import _EncodeVarint
 
 import threading
+import socket
+import time
 
 
-class UPS(Utils):
+class UPS():
 
     def init(self):
-        msg = self.receive_world()
-        # send back
+        msg = amazon_ups_pb2.UAstart()
+        raw_byte = self.recv()
+        msg.ParseFromString(raw_byte)
+        print("Received world: ", msg)
         msg_init = amazon_ups_pb2.AUCommand()
         msg_init.acks.append(msg.seqnum)
         self.send(msg_init)
-        # tell world
         self.world.init(msg.worldid)
         # update stock
         stocks = Stock.objects.all()
@@ -22,8 +29,9 @@ class UPS(Utils):
             s.worldid = msg.worldid
             s.save()
         # start processing response
+        print("Starting processing...")
         responseHandler = threading.Thread(
-            target=self.processResponse, args=())
+            target=self.process_response, args=())
         responseHandler.setDaemon(True)
         responseHandler.start()
 
@@ -38,12 +46,16 @@ class UPS(Utils):
     }
     """
 
-    def set_world(self):
-        msg = world_amazon_pb2.UAstart()
-        raw_byte = self.recv()
-        msg.parseFromString(raw_byte)
-        print("Received world: ", msg)
-        return msg
+    # def set_world(self):
+    #     msg = amazon_ups_pb2.UAstart()
+    #     raw_byte = self.recv()
+    #     msg.ParseFromString(raw_byte)
+    #     print("Received world: ", msg)
+    #     msg_init = amazon_ups_pb2.AUCommand()
+    #     msg_init.acks.append(msg.seqnum)
+    #     self.send(msg_init)
+    #     self.world.init(msg.worldid)
+    #     return msg
 
     """
     message UACommand{
@@ -55,8 +67,11 @@ class UPS(Utils):
     """
 
     def receive(self):
+        print("receive1")
         msg = amazon_ups_pb2.UACommand()
+        print("receive2")
         raw_byte = self.recv()
+        print("receive3")
         msg.ParseFromString(raw_byte)
         print("Received message: ", msg)
         return msg
@@ -207,3 +222,50 @@ class UPS(Utils):
                 self.seq_dict.pop(ack, None)
             # send back
             self.send(back)
+
+    # TEMP
+    def connect(self, simspeed=100):
+        # self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+        self.server_socket.listen()
+        self.simspeed = simspeed
+        self.seq_num = 0
+        self.seq_dict = dict()
+        self.recv_msg = set()
+        print("Here1")
+
+        client_socket, client_address = self.server_socket.accept()
+        print("Here2")
+        self.socket = client_socket
+        print("Here3")
+
+        th_resend = threading.Thread(target=self.resend, args=())
+        th_resend.setDaemon(True)
+        th_resend.start()
+
+    def __del__(self):
+        self.socket.close()
+
+    def send(self, msg):
+        print("Sending message: \n" + str(msg))
+        if str(msg) != "":
+            data_string = msg.SerializeToString()
+            _EncodeVarint(self.socket.send, len(data_string), None)
+            self.socket.send(data_string)
+
+    def recv(self):
+        var_int_buff = []
+        while True:
+            buf = self.socket.recv(1)
+            var_int_buff += buf
+            msg_len, new_pos = _DecodeVarint32(var_int_buff, 0)
+            if new_pos != 0:
+                break
+        whole_message = self.socket.recv(msg_len)
+        return whole_message
+
+    def resend(self):
+        while True:
+            time.sleep(1)
+            for k in self.seq_dict:
+                self.send(self.seq_dict[k])
