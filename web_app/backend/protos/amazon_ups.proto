@@ -30,11 +30,13 @@ message UAstart {
 message AUPickupRequest{
  required int64 seqNum = 1;
  required int64 shipId = 2;
- required int64 warehouseId = 3;
+ required int32 warehouseId = 3;
  required int32 x = 4; // location of the warehouse
  required int32 y = 5; // location of the warehouse
  required int32 destinationX = 6;
  required int32 destinationY = 7;
+ optional string upsName = 8;
+ required string items = 9;
 }
 
 
@@ -44,6 +46,7 @@ message UALoadRequest{
  required int32 truckId = 2;
  required int64 shipId = 3;
 }
+
 
 
 // A -> U: when all ready, make UPS deliver the package

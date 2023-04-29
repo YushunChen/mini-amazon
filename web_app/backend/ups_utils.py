@@ -12,14 +12,23 @@ decoding of messages are handled.
 """
 
 
-class Utils():
-    def __init__(self, host, port, simspeed=100):
-        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.socket.connect((host, port))
+class UPSUtils():
+    def __init__(self, simspeed=100):
+        # self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        print("Binding")
+        self.server_socket.bind(("vcm-32290.vm.duke.edu", 54321))
+        self.server_socket.listen()
         self.simspeed = simspeed
         self.seq_num = 0
         self.seq_dict = dict()
         self.recv_msg = set()
+        print("Here1")
+
+        client_socket, client_address = self.server_socket.accept()
+        print("Here2")
+        self.socket = client_socket
+        print("Here3")
 
         th_resend = threading.Thread(target=self.resend, args=())
         th_resend.setDaemon(True)

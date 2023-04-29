@@ -5,7 +5,7 @@
 <div class="bg-light py-3">
   <div class="container">
     <div class="row">
-      <div class="col-md-12 mb-0"><a href="/index">Home</a> <span class="mx-2 mb-0">/</span> <a href="/shop">Shop</a>
+      <div class="col-md-12 mb-0"><a href="/index"><span class="text-success">Home</span></a> <span class="mx-2 mb-0">/</span> <a href="/shop"><span class="text-success">Shop</span></a>
         <span class="mx-2 mb-0">/</span> <strong class="text-black">Checkout</strong></div>
     </div>
   </div>
@@ -29,7 +29,7 @@
 
           <form action="/thankyou/" method="post" class="text-black"> {% csrf_token %}
             {{form.as_p}}
-            <input type="submit" value="Place Order" class="btn btn-primary btn-lg py-3 btn-block" />
+            <input type="submit" value="Place Order" class="btn btn-success btn-lg py-3 btn-block" />
           </form>
 
         </div>

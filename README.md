@@ -4,6 +4,7 @@
 
 ## Notes to create local postgres database
 ```bash
+sudo su - postgres
 sudo service postgresql start
 psql
 CREATE user yc557;
@@ -26,4 +27,8 @@ To create a superuser in Django within Docker, first use `docker ps` to
 get the container id, then
 ```bash
 sudo docker exec -it <container_id> python3 manage.py createsuperuser
+```
+To enter into a Docker container:
+```bash
+docker exec -it <container_id_or_name> bash
 ```
