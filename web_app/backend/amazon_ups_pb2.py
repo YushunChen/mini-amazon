@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='',
   syntax='proto2',
   serialized_options=None,
-  serialized_pb=_b('\n\x17protos/amazon_ups.proto\"\x84\x01\n\tAUCommand\x12(\n\x0epickupRequests\x18\x01 \x03(\x0b\x32\x10.AUPickupRequest\x12*\n\x0f\x64\x65liverRequests\x18\x02 \x03(\x0b\x32\x11.AUDeliverRequest\x12\x0c\n\x04\x61\x63ks\x18\x03 \x03(\x03\x12\x13\n\x05\x65rror\x18\x04 \x03(\x0b\x32\x04.Err\"u\n\tUACommand\x12$\n\x0cloadRequests\x18\x01 \x03(\x0b\x32\x0e.UALoadRequest\x12\x1f\n\tdelivered\x18\x02 \x03(\x0b\x32\x0c.UADelivered\x12\x0c\n\x04\x61\x63ks\x18\x03 \x03(\x03\x12\x13\n\x05\x65rror\x18\x04 \x03(\x0b\x32\x04.Err\"*\n\x07UAstart\x12\x0f\n\x07worldid\x18\x01 \x02(\x05\x12\x0e\n\x06seqnum\x18\x02 \x02(\x03\"\x88\x01\n\x0f\x41UPickupRequest\x12\x0e\n\x06seqNum\x18\x01 \x02(\x03\x12\x0e\n\x06shipId\x18\x02 \x02(\x03\x12\x13\n\x0bwarehouseId\x18\x03 \x02(\x03\x12\t\n\x01x\x18\x04 \x02(\x05\x12\t\n\x01y\x18\x05 \x02(\x05\x12\x14\n\x0c\x64\x65stinationX\x18\x06 \x02(\x05\x12\x14\n\x0c\x64\x65stinationY\x18\x07 \x02(\x05\"@\n\rUALoadRequest\x12\x0e\n\x06seqNum\x18\x01 \x02(\x03\x12\x0f\n\x07truckId\x18\x02 \x02(\x05\x12\x0e\n\x06shipId\x18\x03 \x02(\x03\"2\n\x10\x41UDeliverRequest\x12\x0e\n\x06seqNum\x18\x01 \x02(\x03\x12\x0e\n\x06shipId\x18\x02 \x02(\x03\"-\n\x0bUADelivered\x12\x0e\n\x06seqNum\x18\x01 \x02(\x03\x12\x0e\n\x06shipId\x18\x02 \x02(\x03\"8\n\x03\x45rr\x12\x0b\n\x03\x65rr\x18\x01 \x02(\t\x12\x14\n\x0coriginSeqNum\x18\x02 \x02(\x03\x12\x0e\n\x06seqNum\x18\x03 \x02(\x03')
+  serialized_pb=_b('\n\x17protos/amazon_ups.proto\"\x84\x01\n\tAUCommand\x12(\n\x0epickupRequests\x18\x01 \x03(\x0b\x32\x10.AUPickupRequest\x12*\n\x0f\x64\x65liverRequests\x18\x02 \x03(\x0b\x32\x11.AUDeliverRequest\x12\x0c\n\x04\x61\x63ks\x18\x03 \x03(\x03\x12\x13\n\x05\x65rror\x18\x04 \x03(\x0b\x32\x04.Err\"u\n\tUACommand\x12$\n\x0cloadRequests\x18\x01 \x03(\x0b\x32\x0e.UALoadRequest\x12\x1f\n\tdelivered\x18\x02 \x03(\x0b\x32\x0c.UADelivered\x12\x0c\n\x04\x61\x63ks\x18\x03 \x03(\x03\x12\x13\n\x05\x65rror\x18\x04 \x03(\x0b\x32\x04.Err\"*\n\x07UAstart\x12\x0f\n\x07worldid\x18\x01 \x02(\x03\x12\x0e\n\x06seqnum\x18\x02 \x02(\x03\"\xa8\x01\n\x0f\x41UPickupRequest\x12\x0e\n\x06seqNum\x18\x01 \x02(\x03\x12\x0e\n\x06shipId\x18\x02 \x02(\x03\x12\x13\n\x0bwarehouseId\x18\x03 \x02(\x05\x12\t\n\x01x\x18\x04 \x02(\x05\x12\t\n\x01y\x18\x05 \x02(\x05\x12\x14\n\x0c\x64\x65stinationX\x18\x06 \x02(\x05\x12\x14\n\x0c\x64\x65stinationY\x18\x07 \x02(\x05\x12\x0f\n\x07upsName\x18\x08 \x01(\t\x12\r\n\x05items\x18\t \x02(\t\"@\n\rUALoadRequest\x12\x0e\n\x06seqNum\x18\x01 \x02(\x03\x12\x0f\n\x07truckId\x18\x02 \x02(\x05\x12\x0e\n\x06shipId\x18\x03 \x02(\x03\"2\n\x10\x41UDeliverRequest\x12\x0e\n\x06seqNum\x18\x01 \x02(\x03\x12\x0e\n\x06shipId\x18\x02 \x02(\x03\"-\n\x0bUADelivered\x12\x0e\n\x06seqNum\x18\x01 \x02(\x03\x12\x0e\n\x06shipId\x18\x02 \x02(\x03\"8\n\x03\x45rr\x12\x0b\n\x03\x65rr\x18\x01 \x02(\t\x12\x14\n\x0coriginSeqNum\x18\x02 \x02(\x03\x12\x0e\n\x06seqNum\x18\x03 \x02(\x03')
 )
 
 
@@ -138,7 +138,7 @@ _UASTART = _descriptor.Descriptor(
   fields=[
     _descriptor.FieldDescriptor(
       name='worldid', full_name='UAstart.worldid', index=0,
-      number=1, type=5, cpp_type=1, label=2,
+      number=1, type=3, cpp_type=2, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -190,7 +190,7 @@ _AUPICKUPREQUEST = _descriptor.Descriptor(
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
       name='warehouseId', full_name='AUPickupRequest.warehouseId', index=2,
-      number=3, type=3, cpp_type=2, label=2,
+      number=3, type=5, cpp_type=1, label=2,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -223,6 +223,20 @@ _AUPICKUPREQUEST = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='upsName', full_name='AUPickupRequest.upsName', index=7,
+      number=8, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
+    _descriptor.FieldDescriptor(
+      name='items', full_name='AUPickupRequest.items', index=8,
+      number=9, type=9, cpp_type=9, label=2,
+      has_default_value=False, default_value=_b("").decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR),
   ],
   extensions=[
   ],
@@ -236,7 +250,7 @@ _AUPICKUPREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=326,
-  serialized_end=462,
+  serialized_end=494,
 )
 
 
@@ -280,8 +294,8 @@ _UALOADREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=464,
-  serialized_end=528,
+  serialized_start=496,
+  serialized_end=560,
 )
 
 
@@ -318,8 +332,8 @@ _AUDELIVERREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=530,
-  serialized_end=580,
+  serialized_start=562,
+  serialized_end=612,
 )
 
 
@@ -356,8 +370,8 @@ _UADELIVERED = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=582,
-  serialized_end=627,
+  serialized_start=614,
+  serialized_end=659,
 )
 
 
@@ -401,8 +415,8 @@ _ERR = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=629,
-  serialized_end=685,
+  serialized_start=661,
+  serialized_end=717,
 )
 
 _AUCOMMAND.fields_by_name['pickupRequests'].message_type = _AUPICKUPREQUEST

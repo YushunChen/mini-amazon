@@ -66,11 +66,9 @@ class UPS():
     """
 
     def receive(self):
-        print("receive1")
+        print("Receiving...")
         msg = amazon_ups_pb2.UACommand()
-        print("receive2")
         raw_byte = self.recv()
-        print("receive3")
         msg.ParseFromString(raw_byte)
         print("Received message: ", msg)
         return msg
@@ -93,7 +91,7 @@ class UPS():
         required int32 destinationX = 6;
         required int32 destinationY = 7;
         optional string upsName = 8;
-        repeated string items = 9;
+        required string items = 9;
     }
     """
 
@@ -111,8 +109,10 @@ class UPS():
         truck.destinationY = worldOrder.y
         truck.shipId = worldOrder.pkgid
         # add item info
-        product = Product.objects.get(pid=worldOrder.pid)
-        truck.items.append(product.description)
+        # TODO: delete this
+        # product = Product.objects.get(pid=worldOrder.pid)
+        # truck.items.append(product.description)
+        truck.items = "TEST"
         # update sequence number
         self.seq_num += 1
         temp = self.seq_num
@@ -168,6 +168,7 @@ class UPS():
     def load_request(self, arrived):
         print("Processing load request")
         UPSOrder = Order.objects.get(pkgid=arrived.shipId)
+        UPSOrder.truckid = arrived.truckId
         UPSOrder.save()
         UPSOrder = Order.objects.get(truckid=arrived.truckId)
         self.world.put_on_truck(UPSOrder)
@@ -222,7 +223,6 @@ class UPS():
             # send back
             self.send(back)
 
-    # TEMP
     def connect(self, simspeed=100):
         # self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 

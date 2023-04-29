@@ -4,7 +4,7 @@ from .ups import UPS
 
 import socket
 
-HOST_WORLD = 'vcm-32290.vm.duke.edu'
+HOST_WORLD = 'vcm-32169.vm.duke.edu'
 PORT_WORLD = 23456
 
 SIMSPEED = 10000
@@ -27,13 +27,12 @@ class Backend():
         print('Ups initialized')
         self.world = World(HOST_WORLD, PORT_WORLD, SIMSPEED)
         print('Initialized world.')
-        # self.world.init()
         self.ups.setWorld(self.world)
         self.world.setUPS(self.ups)
         print('Set completed')
         self.ups.init()
         print('Initialized backend.')
-
+    
     def buy(self, pid, whid, count):
         self.world.purchase_more(pid, whid, count)
 
@@ -42,3 +41,6 @@ class Backend():
 
     def refresh(self):
         self.world.query()
+        
+    def get_world(self):
+        return self.world

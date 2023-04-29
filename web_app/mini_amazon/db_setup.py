@@ -37,6 +37,7 @@ db_utils.execute_and_commit(query, conn, cursor)
 query = f"""
     INSERT INTO mini_amazon_warehouse(whid, x, y)
     VALUES
+    (0, 0, 0),
     (1, 1, 1),
     (2, 2, 2),
     (3, 3, 3);
@@ -68,14 +69,14 @@ db_utils.execute_and_commit(query, conn, cursor)
 query = f"""
         INSERT INTO mini_amazon_stock(pid, count, worldid, whid)
         VALUES
-        (1, 1, 1, 1),
-        (2, 1, 1, 1),
-        (3, 1, 1, 1),
-        (4, 1, 1, 1),
-        (5, 1, 1, 1),
-        (6, 1, 1, 1),
-        (7, 1, 1, 1),
-        (8, 1, 1, 1);
+        (1, 1, 1, 0),
+        (2, 1, 1, 0),
+        (3, 1, 1, 0),
+        (4, 1, 1, 0),
+        (5, 1, 1, 0),
+        (6, 1, 1, 0),
+        (7, 1, 1, 0),
+        (8, 1, 1, 0);
     """
 db_utils.execute_and_commit(query, conn, cursor)
 

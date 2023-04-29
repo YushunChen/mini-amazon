@@ -11,7 +11,6 @@ class World(Utils):
     def setUPS(self, ups):
         self.ups = ups
 
-    # TODO: add world_id in parameters
     def init(self, world_id):
         # clear order
         Order.objects.all().delete()

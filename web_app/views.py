@@ -10,7 +10,6 @@ from backend.backend import Backend
 global backend
 backend = Backend()
 
-
 def register(request):
     form = UserCreationForm
     context = {
