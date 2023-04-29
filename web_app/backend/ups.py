@@ -1,5 +1,4 @@
 from .utils import Utils
-from .ups_utils import UPSUtils
 from . import world_amazon_pb2
 from . import amazon_ups_pb2
 from mini_amazon.models import Order, Stock, Product, Warehouse

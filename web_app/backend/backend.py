@@ -2,7 +2,6 @@
 from .world import World
 from .ups import UPS
 
-import threading
 import socket
 
 HOST_WORLD = 'vcm-32290.vm.duke.edu'
@@ -19,9 +18,9 @@ class Backend():
             self.ups.server_socket = socket.socket(
                 socket.AF_INET, socket.SOCK_STREAM)
             self.ups.server_socket.bind(("vcm-32290.vm.duke.edu", 54321))
-            flag = True
         except OSError:
             print("Socket already bound")
+            return
         else:
             print("Socket bound successfully")
         self.ups.connect(SIMSPEED)
@@ -33,7 +32,6 @@ class Backend():
         self.world.setUPS(self.ups)
         print('Set completed')
         self.ups.init()
-        # self.ups.init()
         print('Initialized backend.')
 
     def buy(self, pid, whid, count):

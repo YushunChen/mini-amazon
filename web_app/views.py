@@ -142,6 +142,7 @@ def thankyou(request):
             entry.save()
             t2 = threading.Thread(target=backend.pack, args=(pkgid,))
             t2.start()
+            backend.pack(pkgid)
             send_mail('Your order is confirmed!', 'Thank you for using Mini Amazon!', 'yc557@duke.com',
                       [Order.objects.get(pkgid=pkgid).email], fail_silently=False)
             return render(request, 'thankyou.html', {})
