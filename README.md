@@ -4,8 +4,8 @@
 
 ## Notes to create local postgres database
 ```bash
-sudo su - postgres
 sudo service postgresql start
+sudo su - postgres
 psql
 CREATE user yc557;
 ALTER USER yc557 WITH PASSWORD 'Oliver666';
